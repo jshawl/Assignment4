@@ -23,7 +23,6 @@ class ArrayViewController: UIViewController, UITableViewDataSource, UITableViewD
         input.delegate = self
 
         self.view.backgroundColor = UIColor.redColor()
-        self.tableView?.registerClass(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
 

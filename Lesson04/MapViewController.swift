@@ -28,7 +28,6 @@ class MapViewController: UIViewController, UITableViewDataSource, UITableViewDel
         valueInput.delegate = self
         self.dictionaryTableView.delegate = self
         self.dictionaryTableView.dataSource = self
-        self.dictionaryTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellId)
         
         /*
         TODO three: Add TWO text views and a table view to this view controller, either using code or storybaord. Accept keyboard input from the two text views. When the 'return' button is pressed on the SECOND text view, add the text view data to a dictionary. The KEY in the dictionary should be the string in the first text view, the VALUE should be the second.
@@ -53,11 +52,12 @@ class MapViewController: UIViewController, UITableViewDataSource, UITableViewDel
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("jammie", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(self.cellId, forIndexPath: indexPath) as UITableViewCell
         
         // Configure the cell...
         let key = keys[indexPath.row]
-        cell.textLabel?.text = key + ": \(tableData[ key ]!)"
+        cell.textLabel?.text = key
+        cell.detailTextLabel?.text = tableData[ key ]
         return cell
     }
     override func viewWillAppear(animated: Bool) {
