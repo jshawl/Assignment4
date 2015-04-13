@@ -8,17 +8,20 @@
 
 import UIKit
 
-class ArrayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ArrayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var input: UITextField!
     var tableData = ["one", "two"]
     let cellIdentifier = "arrayCell"
-    override func viewDidLoad() {
+        override func viewDidLoad() {
         super.viewDidLoad()
 //        self.dismissViewControllerAnimated(false, completion: nil)
         self.dismissViewControllerAnimated(false, completion: { () -> Void in
             self.view.backgroundColor = UIColor.blueColor()
         })
+        input.delegate = self
+
         self.view.backgroundColor = UIColor.redColor()
         self.tableView?.registerClass(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
         tableView.delegate = self
@@ -50,7 +53,42 @@ class ArrayViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.textLabel?.text = tableData[indexPath.row]
         return cell
     }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHideNotification:", name: UIKeyboardDidHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShowNotification:", name: UIKeyboardDidShowNotification, object: nil)
+    }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func keyboardWillShowNotification(notification:NSNotification){
+        
+    }
+    
+    func keyboardDidShowNotification(notification:NSNotification){
+        
+    }
+    
+    func keyboardWillHideNotification(notification: NSNotification){
+        tableData = tableData + [input.text!]
+        input.text? = ""
+        self.tableView.reloadData()
+    }
+    
+    func keyboardDidHideNotification(notification: NSNotification){
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 
+    
 }
 
