@@ -74,7 +74,8 @@ class MapViewController: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func keyboardWillShowNotification(notification:NSNotification){
-        
+        keyInput.backgroundColor = UIColor.blueColor()
+        valueInput.backgroundColor = UIColor.blueColor()
     }
     
     func keyboardDidShowNotification(notification:NSNotification){
@@ -82,6 +83,8 @@ class MapViewController: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func keyboardWillHideNotification(notification: NSNotification){
+        keyInput.backgroundColor = UIColor.redColor()
+        valueInput.backgroundColor = UIColor.redColor()
         tableData[keyInput.text!] = valueInput.text!
         keyInput.text? = ""
         valueInput.text? = ""
